@@ -8,6 +8,12 @@ async function copyDir(mainCtl, copyCtl) {
     try {
         await fs.mkdir(copyCtl, { recursive: true });
 
+        const newFiles = await fs.readdir(copyCatalog);
+
+        for(const file of newFiles) {
+           await fs.unlink(path.join(copyCatalog, file));
+        }
+
         const files = await fs.readdir(mainCtl);
 
         files.forEach((file) => {
